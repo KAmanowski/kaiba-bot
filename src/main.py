@@ -8,8 +8,8 @@ import datetime
 import asyncio
 
 from discord.ext.commands.bot import Bot
-from commands.pingCommand import PingCommand
-from commands.randCommand import RandCommand
+from command.PingCommand import PingCommand
+from command.RandCommand import RandCommand
 
 def initialiseCommands(bot: Bot):
     bot.add_cog(RandCommand(bot))
