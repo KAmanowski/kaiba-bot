@@ -5,6 +5,8 @@ import random
 
 from discord.ext.commands.context import Context
 
+from util.ErrorRaiser import ErrorRaiser
+
 
 class RandCommand(commands.Cog):
     
@@ -24,7 +26,7 @@ class RandCommand(commands.Cog):
             try:
                 int(i)
             except ValueError:
-                await ctx.send(member.display_name + ", one of your arguments isn't a number you fucking idiot.")
+                await ErrorRaiser.raiseError(ctx, member.display_name + ", one of your arguments isn't a number you fucking idiot.")
                 validArgs = False
                 
         if (validArgs):
