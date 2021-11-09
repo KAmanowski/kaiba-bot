@@ -1,0 +1,6 @@
+{
+  "messages": {
+    "noArguments": "What am I supposed to do with this - you've given me no arguments.",
+    "general": "You've either broken me, or your arguments are wrong. Check and try again."
+  }
+}
