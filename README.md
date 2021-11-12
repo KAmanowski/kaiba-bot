@@ -37,6 +37,8 @@ There are 3 available server commands:
 
 - `£server restart <server>` restarts a server.
 
+![Capture](https://user-images.githubusercontent.com/18753120/141541057-091db6a4-5cea-4348-98eb-8543fb52fbd3.PNG)
+
 You can't start a new server command when there is one in progress
 
 # Requests
