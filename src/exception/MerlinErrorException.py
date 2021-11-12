@@ -1,0 +1,2 @@
+class MerlinErrorException(Exception):
+  pass
