@@ -40,4 +40,4 @@ There are 3 available server commands:
 You can't start a new server command when there is one in progress
 
 # Requests
-If you have an idea for what you want the bot to be able to do, raise an issue for it.
+If you have an idea for what you want the bot to be able to do, raise an issue for it or tell me and I'll do it.
