@@ -14,7 +14,6 @@ class RandCommand(commands.Cog):
         super().__init__()
         self.bot = bot
     
-    
     @commands.command(brief='Gives you a random number.', description='[£rand n] will give a number from 0 to n, [£rand n m] will give a number from n to m.')
     async def rand(self, ctx: Context, *args):
         member: discord.Member = ctx.author
