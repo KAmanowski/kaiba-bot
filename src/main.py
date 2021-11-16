@@ -1,6 +1,7 @@
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
 import logging
+from command.AnnounceCommand import AnnounceCommand
 from command.BoysNightCountdownCommand import BoysNightCountdownCommand
 from command.CountdownCommand import CountdownCommand
 
@@ -16,6 +17,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(CountdownCommand(bot))
     bot.add_cog(BoysNightCountdownCommand(bot))
     bot.add_cog(ServerCommand(bot))
+    bot.add_cog(AnnounceCommand(bot))
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
