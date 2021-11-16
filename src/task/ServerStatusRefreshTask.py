@@ -50,7 +50,6 @@ class ServerStatusRefreshTask(commands.Cog):
         await bot.wait_until_ready()
         
         channel = bot.get_channel(DynamicConfigReader.task_get_channel_id(ServerStatusRefreshTask.task_name))
-        bot.fetch_channel
 
         message: Message = None
         
