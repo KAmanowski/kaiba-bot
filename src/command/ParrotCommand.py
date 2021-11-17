@@ -12,9 +12,11 @@ class ParrotCommand(commands.Cog):
     @commands.command()
     async def parrot(self, ctx: Context, *args):
         try:
-            message: Message = ctx.message
-            await message.delete()
+            # Delete calling message
+            await ctx.message.delete()
             if len(args) > 0:
+                # Send message bot was told to parrot
                 await ctx.send(args[0])
         except Forbidden:
+            # The bot can't delete private messages sent to it - the below is sent in this case
             await ctx.send("I cannot parrot your message - I do not have the necessary permissions.")

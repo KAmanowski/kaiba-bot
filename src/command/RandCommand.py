@@ -21,13 +21,15 @@ class RandCommand(commands.Cog):
         
         validArgs = True
         
+        # Checks that each argument given is an integer
         for i in args:
             try:
                 int(i)
             except ValueError:
                 await ErrorRaiser.raiseError(ctx, member.display_name + ", one of your arguments isn't a number you fucking idiot.")
                 validArgs = False
-                
+        
+        # If all arguments are valid, do one of the below        
         if (validArgs):
             if (argLen == 0):  
                 await ctx.send(str(random.random()))
