@@ -6,44 +6,38 @@ from exception.ConfigNotFound import ConfigNotFoundError
 
 class ConfigReader:
   
-  def get_json(fileName: str) -> TextIOWrapper:
+  def getJson(fileName: str) -> TextIOWrapper:
     dirname = os.path.dirname(__file__)
     fullFileName = os.path.join(dirname, fileName)
-    file = open(fullFileName)
-    
-    config = json.load(file)
-    file.close()
-    
-    return config
+    return open(fullFileName)
 
-  def get_token() -> str:
-    try:
-      authF = ConfigReader.get_json('../config/auth.json')
-      return authF['token']
-    except KeyError:
-      raise ConfigNotFoundError("Cannot find token.")
+  def getToken() -> str:
+    authF = ConfigReader.getJson('../config/auth.json')
     
-  def get_startup_config(configName: str) -> str:
-    try:
-      configFile = ConfigReader.get_json('../config/startup.json')
-      return configFile[configName]
-    except KeyError:
+    token = json.load(authF)['token']
+    
+    if not token:
+      raise ConfigNotFoundError("Cannot find token.")
+    else:
+      return token
+    
+  def getStartupConfig(configName: str) -> str:
+    configFile = ConfigReader.getJson('../config/startup.json')
+    
+    config = json.load(configFile)[configName]
+    
+    if not config:
       raise ConfigNotFoundError("Cannot find " + configName + ".")
+    else:
+      return config
     
   def getErrorMessage(messageName: str) -> str:
-    try:
-      errorMessages = ConfigReader.get_json('../config/error.json')
-      return errorMessages['messages'][messageName]
-    except KeyError:
-      raise ConfigNotFoundError("Cannot find " + messageName + ".")
+    errorMessages = ConfigReader.getJson('../config/error.json')
   
-    # returns channel id in a server
-  def get_channel_id(server: str, channel: str) -> int:
-    try:
-      config = ConfigReader.get_json('../dynamic-config/server-channel-ids.json')
-      channel_id = config[server][channel]
-      
-      return channel_id
-    except KeyError:
-      raise ConfigNotFoundError("Cannot find " + server + " or " + channel + " in config.")
+    errorMessage = json.load(errorMessages)['messages'][messageName]
+    
+    if not errorMessage:
+      raise ConfigNotFoundError("Cannot find " + errorMessage + ".")
+    else:
+      return errorMessage
     

@@ -44,3 +44,13 @@ class DynamicConfigReader:
     except KeyError:
       raise ConfigNotFoundError("Cannot find " + taskName + " in config.")
     
+  # returns channel id in a server
+  def command_get_channel_id(server: str, channel: str) -> int:
+    try:
+      config = DynamicConfigReader.get_json('../dynamic-config/server-channel-ids.json')
+      channel_id = config[server][channel]
+      
+      return channel_id
+    except KeyError:
+      raise ConfigNotFoundError("Cannot find " + server + " or " + channel + " in config.")
+    
