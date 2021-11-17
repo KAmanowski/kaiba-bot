@@ -19,7 +19,7 @@ class ServerCommand(commands.Cog):
     async def start_server(self, ctx: Context, server: str):
       self.message = await ctx.send('Attempting to start server ' + str.upper(server) + '.')
       Merlin.server_command(server, 'start')
-      await self.message.edit(content='<:coolio:802363745170358282> Server ' + str.upper(server) + ' has been started - just give it a couple secs to set up.')
+      await self.message.edit(content='<:coolio:802363745170358282> Server ' + str.upper(server) + ' has been started - just give it a couple of seconds to set up.')
     
     async def kill_server(self, ctx: Context, server: str):
       self.message = await ctx.send('Attempting to kill server ' + str.upper(server) + '.')
@@ -58,9 +58,9 @@ class ServerCommand(commands.Cog):
         except MerlinErrorException:
           await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
         except:
-          await self.message.edit(content='Aight, not even I know what went wrong. No server command for you.')
+          await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')
         
         # Unlock command
         self.lock = False
       else:
-        await ctx.send('There is already a server command running, chill. Stop tryna break my ass.')
+        await ctx.send('There is already a server command running, chill. Stop trying to break my ass.')

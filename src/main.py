@@ -4,6 +4,7 @@ import logging
 from command.AnnounceCommand import AnnounceCommand
 from command.BoysNightCountdownCommand import BoysNightCountdownCommand
 from command.CountdownCommand import CountdownCommand
+from command.ParrotCommand import ParrotCommand
 
 from command.PingCommand import PingCommand
 from command.RandCommand import RandCommand
@@ -18,6 +19,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(BoysNightCountdownCommand(bot))
     bot.add_cog(ServerCommand(bot))
     bot.add_cog(AnnounceCommand(bot))
+    bot.add_cog(ParrotCommand(bot))
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
