@@ -34,14 +34,18 @@ class ServerCommand(commands.Cog):
     @commands.command()
     async def server(self, ctx: Context, *args):
       self.message: Message = None
+      
+      # If no server command is currently in progress
       if self.lock == False:
         try:
           if len(args) == 2:
-            # Lock command
+            # Lock server command so no one else can use it
             self.lock = True
             
+            # Convert each argument to lowercase
             command = str.lower(args[0])
             server = str.lower(args[1])
+            # Depending on command, do one of these
             match command:
               case 'start':
                 await self.start_server(ctx, server)
@@ -53,14 +57,18 @@ class ServerCommand(commands.Cog):
                 await ctx.send(command + ' is not a valid command.')
         
         except BadInputException as e:
+          # If Merlin can't find a server given to it by the user 
           await self.message.edit(content="Merlin says you fucked up: '" + str(e) + "'")
           await ctx.send('<:disgust2:906313723147354173>')
         except MerlinErrorException:
+          # Misc Merlin error
           await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
         except:
+          # Something else went wrong
           await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')
         
-        # Unlock command
+        # Unlocks server command when everything is finished
         self.lock = False
       else:
+        # If lock is active, tell the user to stop trying to break the bot
         await ctx.send('There is already a server command running, chill. Stop trying to break my ass.')

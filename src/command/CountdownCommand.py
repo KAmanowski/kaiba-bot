@@ -66,12 +66,14 @@ class CountdownCommand(commands.Cog):
                 await ErrorRaiser.noArguments(ctx)
                 return
             
+            # Start totalSeconds at 0
             totalSeconds: int = 0
             
             validArgs = ['s', 'm', 'h', 'd']
             
             for i in range(len(args)):
                 if args[i] in validArgs:
+                    # For every second, minute, hour or day argument add the equivalent amount of seconds
                     totalSeconds += CountdownCommand.addSeconds(args[i], int(args[i + 1]))
             
             asyncio.create_task(CountdownCommand.countDown(ctx, totalSeconds))
