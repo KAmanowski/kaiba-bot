@@ -4,7 +4,7 @@ from discord.ext.commands.context import Context
 from discord.message import Message
 from exception.ConfigNotFound import ConfigNotFoundError
 
-from util.DynamicConfigReader import DynamicConfigReader
+from util.ConfigReader import ConfigReader
 
 class AnnounceCommand(commands.Cog):
     
@@ -17,7 +17,7 @@ class AnnounceCommand(commands.Cog):
         if len(args) > 2:
             try:
                 # Retreieves server and channel provided by user - this can fail
-                channel = self.bot.get_channel(DynamicConfigReader.command_get_channel_id(args[0], args[1]))
+                channel = self.bot.get_channel(ConfigReader.get_channel_id(args[0], args[1]))
                 # This check checks if the channel is a TextChannel
                 isinstance(channel, TextChannel)
             

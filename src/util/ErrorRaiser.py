@@ -8,7 +8,7 @@ class ErrorRaiser:
     await ctx.send(message)
     
   async def noArguments(ctx: Context) -> None:
-    await ctx.send(ConfigReader.getErrorMessage('noArguments'))
+    await ctx.send(ConfigReader.get_error_message('noArguments'))
     
   async def catchException(ctx: Context) -> None:
-    await ctx.send(ConfigReader.getErrorMessage('general'))
+    await ctx.send(ConfigReader.get_error_message('general'))
