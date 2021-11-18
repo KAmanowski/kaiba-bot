@@ -23,18 +23,19 @@ class ServerCommandBlockTask(commands.Cog):
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
-        self.counters: dict = {}
+        self.naughties: dict = {}
+        self.lastNaughties: dict = {}
         self.remove_server_command_blocks.start()
         
     def update_counter(self, userId: str):
-        if userId in self.counters:
-            self.counters[userId] = self.counters[userId] + 1
+        if userId in self.naughties:
+            self.naughties[userId] = self.naughties[userId] + 1
         else:
-            self.counters[userId] = 1
+            self.naughties[userId] = 1
         
     def can_use_command(self, userId: str) -> bool:
-        if userId in self.counters:
-            if self.counters[userId] >= self.MAX_COMMANDS:
+        if userId in self.naughties:
+            if self.naughties[userId] >= self.MAX_COMMANDS:
                 return False
             else:
                 return True
@@ -43,6 +44,13 @@ class ServerCommandBlockTask(commands.Cog):
         
     @tasks.loop(minutes=15)
     async def remove_server_command_blocks(self):
-        self.counters = {}
+        newNaughties: dict = {}
+        for naughtyUser in self.lastNaughties:
+            # If user got soft-banned last refresh, give them less commands
+            if naughtyUser in self.naughties and self.naughties[naughtyUser] >= self.MAX_COMMANDS:
+                newNaughties[naughtyUser] = self.MAX_COMMANDS - 2
+
+        self.lastNaughties = self.naughties
+        self.naughties = newNaughties
         
             

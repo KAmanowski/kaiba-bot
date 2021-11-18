@@ -37,9 +37,10 @@ class ServerCommand(commands.Cog):
       bot: Bot = self.bot
       
       blocker: ServerCommandBlockTask = bot.get_cog('ServerCommandBlockTask')
-        
-      if blocker.can_use_command(ctx.message.author) == False:
-        await ctx.send("You've used too many server commands in a short time. You have been soft banned for some time.")
+      username: str = ctx.message.author.name
+      
+      if blocker.can_use_command(username) == False:
+        await ctx.send(f"You've used too many server commands in a short time, {username}. You have been soft banned for some time.")
         return
       
       # If no server command is currently in progress
@@ -48,8 +49,6 @@ class ServerCommand(commands.Cog):
           if len(args) == 2:
             # Lock server command so no one else can use it
             self.lock = True
-            # Update the blocker counter
-            blocker.update_counter(ctx.message.author)
             
             # Convert each argument to lowercase
             command = str.lower(args[0])
@@ -64,6 +63,9 @@ class ServerCommand(commands.Cog):
                 await self.restart_server(ctx, server)
               case _:
                 await ctx.send(command + ' is not a valid command.')
+            
+            # Update the blocker counter after successful command
+            blocker.update_counter(username)
         
         except BadInputException as e:
           # If Merlin can't find a server given to it by the user 
