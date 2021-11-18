@@ -5,6 +5,8 @@ from discord.message import Message
 from exception.BadInputException import BadInputException
 from exception.MerlinErrorException import MerlinErrorException
 
+from task.ServerCommandBlockTask import ServerCommandBlockTask
+
 from provider.Merlin import Merlin
 
 class ServerCommand(commands.Cog):
@@ -31,7 +33,15 @@ class ServerCommand(commands.Cog):
         
     @commands.command()
     async def server(self, ctx: Context, *args):
-      self.message: Message = None
+      self.message: Message = None     
+      bot: Bot = self.bot
+      
+      blocker: ServerCommandBlockTask = bot.get_cog('ServerCommandBlockTask')
+      username: str = ctx.message.author.name
+      
+      if blocker.can_use_command(username) == False:
+        await ctx.send(f"You've used too many server commands in a short time, {username}. You have been soft banned for some time.")
+        return
       
       # If no server command is currently in progress
       if self.lock == False:
@@ -53,6 +63,9 @@ class ServerCommand(commands.Cog):
                 await self.restart_server(ctx, server)
               case _:
                 await ctx.send(command + ' is not a valid command.')
+            
+            # Update the blocker counter after successful command
+            blocker.update_counter(username)
         
         except BadInputException as e:
           # If Merlin can't find a server given to it by the user 
@@ -69,4 +82,4 @@ class ServerCommand(commands.Cog):
         self.lock = False
       else:
         # If lock is active, tell the user to stop trying to break the bot
-        await ctx.send('There is already a server command running, chill. Stop trying to break my ass.')
+        await ctx.send("There is already a server command running, chill. Stop trying to break me - you cannot. I'll outlast you.")

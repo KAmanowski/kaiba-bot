@@ -9,6 +9,7 @@ from command.ParrotCommand import ParrotCommand
 from command.PingCommand import PingCommand
 from command.RandCommand import RandCommand
 from command.ServerCommand import ServerCommand
+from task.ServerCommandBlockTask import ServerCommandBlockTask
 from task.ServerStatusRefreshTask import ServerStatusRefreshTask
 from util.ConfigReader import ConfigReader
 
@@ -23,6 +24,7 @@ def initialise_commands(bot: Bot):
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
+    bot.add_cog(ServerCommandBlockTask(bot))
     
 logging.basicConfig(level=logging.INFO)
 
