@@ -6,8 +6,6 @@ from exception.BadInputException import BadInputException
 from exception.MerlinErrorException import MerlinErrorException
 
 from provider.Merlin import Merlin
-from util.DynamicConfigReader import DynamicConfigReader
-from util.DynamicConfigWriter import DynamicConfigWriter
 
 class ServerCommand(commands.Cog):
     

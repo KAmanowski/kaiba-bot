@@ -30,7 +30,7 @@ class ConfigReader:
     except KeyError:
       raise ConfigNotFoundError("Cannot find " + configName + ".")
     
-  def getErrorMessage(messageName: str) -> str:
+  def get_error_message(messageName: str) -> str:
     try:
       errorMessages = ConfigReader.get_json('../config/error.json')
       return errorMessages['messages'][messageName]

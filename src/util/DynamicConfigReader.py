@@ -15,16 +15,6 @@ class DynamicConfigReader:
     file.close()
     
     return config
-  
-  # def lock_get_command(command: str) -> bool:
-  #   try:
-  #     config = DynamicConfigReader.get_json('../dynamic-config/lock.json')
-  #     channel_id = config['commands'][command]
-      
-  #     return channel_id
-  #   except KeyError:
-  #     raise ConfigNotFoundError("Cannot find " + command + " lock in config.")
-    
     
   def task_get_channel_id(taskName: str) -> str:
     try:

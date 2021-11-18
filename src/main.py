@@ -31,4 +31,4 @@ bot = commands.Bot(command_prefix='£')
 initialise_commands(bot)
 initialise_tasks(bot)
     
-bot.run(ConfigReader.getToken())
+bot.run(ConfigReader.get_token())
