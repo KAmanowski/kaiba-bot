@@ -14,11 +14,9 @@ All commands start with a prefix of `£`. Supported commands:
 ### Arguments
 All arguments given must be whole numbers.
 
-`£rand`: returns a decimal between `0` and `1`.
-
-`£rand <arg 1>`: returns a number between `0` and `<arg 1>`.
-
-`£rand <arg 1> <arg 2>`: returns a number between `<arg 1>` and `<arg 2>`.
+- `£rand`: returns a decimal between `0` and `1`.
+- `£rand <arg 1>`: returns a number between `0` and `<arg 1>`.
+- `£rand <arg 1> <arg 2>`: returns a number between `<arg 1>` and `<arg 2>`.
   
   ![Capture](https://user-images.githubusercontent.com/18753120/141537045-2df44ab3-36da-4991-a9d8-71dae5073bf6.PNG)
 
@@ -32,14 +30,37 @@ List of currently supported servers:
 There are 3 available server commands:
 
 - `£server start <server>` starts a server.
-
 - `£server kill <server>` kills a server.
-
 - `£server restart <server>` restarts a server.
 
 ![Capture](https://user-images.githubusercontent.com/18753120/141541057-091db6a4-5cea-4348-98eb-8543fb52fbd3.PNG)
 
-You can't start a new server command when there is one in progress
+You can't start a new server command when there is one in progress. Also, you can be soft-banned for being an asshole with the commands.
+
+## Announce
+`announce` allows you to send a message as the bot to a specific channel on a server. The support server/channel pairs include:
+-  `kaiba` (the Kaiba Corp. server):
+	- `bantercave`
+	- `servers`
+	- `ttr`  (thingies-to-remember)
+	- `hearties` (arrrr-me-hearties)
+	- `valheim`
+	- `dealhunters`
+	- `bot`
+	- `jukebox`
+
+### Usage
+Usage of the command is simple: `£announce <server> <channel> "<message in quotes>"`
+
+Example: `£server kaiba bantercave "This is the bot speaking. Beep boop."`
+
+## Parrot
+`parrot` makes the bot parrot what you just wrote.
+
+### Usage
+`£parrot "<message>"` will make the bot delete your message, and say what you just said in the same channel.
+
+Example: `£parrot "Shut up."`
 
 # Requests
 If you have an idea for what you want the bot to be able to do, raise an issue for it or tell me and I'll do it.
