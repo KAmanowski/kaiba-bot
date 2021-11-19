@@ -2,7 +2,6 @@ from discord.ext import commands
 from discord.ext.commands.bot import Bot
 import logging
 from command.AnnounceCommand import AnnounceCommand
-from command.BoysNightCountdownCommand import BoysNightCountdownCommand
 from command.CountdownCommand import CountdownCommand
 from command.ParrotCommand import ParrotCommand
 
@@ -17,7 +16,6 @@ def initialise_commands(bot: Bot):
     bot.add_cog(RandCommand(bot))
     bot.add_cog(PingCommand(bot))
     bot.add_cog(CountdownCommand(bot))
-    bot.add_cog(BoysNightCountdownCommand(bot))
     bot.add_cog(ServerCommand(bot))
     bot.add_cog(AnnounceCommand(bot))
     bot.add_cog(ParrotCommand(bot))
