@@ -12,6 +12,7 @@ class RunCronJobsTask(commands.Cog):
         super().__init__()
         self.bot = bot
         self.get_jobs()
+        # Sync the clock to 0 seconds first
         self.syncClock.start()
         
     def get_jobs(self):
@@ -28,5 +29,6 @@ class RunCronJobsTask(commands.Cog):
       current_second = int(datetime.now().strftime("%S"))
       
       if current_second == 0:
+        # When current second is 0, can now check each minute
         self.syncClock.stop()
         self.runJobs.start()

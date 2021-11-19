@@ -14,7 +14,7 @@ class BoysNightAnnounceJob():
         self.bot = bot
         self.hasPosted = True
         
-    async def sendMessage(self, message: str):
+    async def send_message(self, message: str):
         if self.hasPosted == False:
             self.hasPosted = True
             # Get 'servers' channel in KaibaCorp server
@@ -29,6 +29,6 @@ class BoysNightAnnounceJob():
         await bot.wait_until_ready()
         
         if pycron.is_now(self.CRON):
-            await self.sendMessage("It's Boys' Night!")
+            await self.send_message("It's Boys' Night!")
         else:
             self.hasPosted = False
