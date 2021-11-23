@@ -40,7 +40,7 @@ class ConfigReader:
     # returns channel id in a server
   def get_channel_id(server: str, channel: str) -> int:
     try:
-      config = ConfigReader.get_json('../dynamic-config/server-channel-ids.json')
+      config = ConfigReader.get_json('../config/server-channel-ids.json')
       channel_id = config[server][channel]
       
       return channel_id
