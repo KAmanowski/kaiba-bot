@@ -7,7 +7,7 @@ class BoysNightAnnounceJob():
     
     SERVER = 'kaiba'
     CHANNEL = 'bantercave'
-    CRON = '0 21 * * 5'
+    CRON_EXPR = '0 21 * * 5'
     
     def __init__(self, bot):
         super().__init__()
@@ -28,7 +28,7 @@ class BoysNightAnnounceJob():
         
         await bot.wait_until_ready()
         
-        if pycron.is_now(self.CRON):
+        if pycron.is_now(self.CRON_EXPR):
             await self.send_message("It's Boys' Night!")
         else:
             self.hasPosted = False
