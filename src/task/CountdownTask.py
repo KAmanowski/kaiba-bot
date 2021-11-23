@@ -89,10 +89,4 @@ class CountdownTask(commands.Cog):
           print("Done")
           i = i + 1
         except discord.NotFound:
-          self.ctds.pop(i)
-        
-        
-        
-        
-        
-            
+          self.ctds.pop(i)       
