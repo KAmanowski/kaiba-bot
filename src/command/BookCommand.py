@@ -1,20 +1,31 @@
 from datetime import datetime, time
 from discord.abc import User
+from discord.channel import TextChannel
 from discord.errors import NotFound
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.context import Context
 from discord.message import Message
 from domain.Booking import Booking
+from util.ConfigReader import ConfigReader
 
 from util.DynamicConfigReader import DynamicConfigReader
 from util.DynamicConfigWriter import DynamicConfigWriter
 
 class BookCommand(commands.Cog):
     
+    SERVER = "kaiba"
+    CHANNEL = "bantercave"
+    
     def __init__(self, bot):
         super().__init__()
         self.bot: Bot = bot
+        
+    async def send_message(self, message: str):
+        channel = self.bot.get_channel(ConfigReader.get_channel_id(self.SERVER, self.CHANNEL))
+        isinstance(channel, TextChannel)
+        
+        await channel.send(message)
         
     @commands.command()
     async def book(self, ctx: Context, *args):
@@ -24,12 +35,16 @@ class BookCommand(commands.Cog):
             await ctx.send('Wrong number of arguments.')
             return
             
+        givenUserId = args[1]
         try:
-            givenUserId = str(args[1])[3:-1]
-            int(givenUserId)
+            int(args[1])
         except:
-            await ctx.send('I need a valid user Id.')
-            raise
+            try:
+                givenUserId = str(args[1])[3:-1]
+                int(givenUserId)
+            except:
+                await ctx.send('I need a valid user Id.')
+                return
             
         if args[0] == 'yellow' or args[0] == 'red':      
             try:
@@ -41,7 +56,7 @@ class BookCommand(commands.Cog):
                 
                 if args[0] == 'yellow':
                     DynamicConfigWriter.command_book('yellow', user.id, booking)
-                    await ctx.send(f"<@!{user.id}> has been given a yellow card by <@!{ctx.message.author.id}>. Reason: {args[2]}")
+                    await self.send_message(f"<@!{user.id}> has been given a yellow card by <@!{ctx.message.author.id}>. Reason: '{args[2]}'")
                     
                     yellowBookings = DynamicConfigReader.command_get_bookings('yellow', user.id)
                     redBookings = DynamicConfigReader.command_get_bookings('red', user.id)
@@ -50,12 +65,12 @@ class BookCommand(commands.Cog):
                         # If its a multiple of two (2, 4, 6 etc.) then it's time for a red card
                         if len(yellowBookings) % 2 == 0:
                             if len(redBookings) > 0:
-                                await ctx.send(f"Oh wow <@!{user.id}>, another red card in one week. I wouldn't wanna be you come friday.")
+                                await self.send_message(f"Oh wow <@!{user.id}>, another red card in one week. I wouldn't wanna be you come friday.")
                             else:
-                                await ctx.send(f"<@!{user.id}>, you now have a red card. Prepare for friday.")
+                                await self.send_message(f"<@!{user.id}>, you now have a red card. Prepare for friday.")
                             DynamicConfigWriter.command_book('red', user.id, kaibaBooking)
                 else:
-                    await ctx.send(f"Woah, you've pissed someone off <@!{user.id}>. You've been given a red card by <@!{ctx.message.author.id}>. Reason: {args[2]}")
+                    await self.send_message(f"Woah, you've pissed someone off <@!{user.id}>. You've been given a red card by <@!{ctx.message.author.id}>. Reason: '{args[2]}'")
                     DynamicConfigWriter.command_book('red', user.id, booking)
 
             except NotFound:
