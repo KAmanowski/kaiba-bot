@@ -34,3 +34,17 @@ class DynamicConfigReader:
     except KeyError:
       raise ConfigNotFoundError("Cannot find " + taskName + " in config.")
     
+  def command_get_bookings(card: str, userId: str) -> list:
+    userId = str(userId)
+    try:
+      file_name = '../dynamic-config/booking.json'
+      bookings = DynamicConfigReader.get_json(file_name)
+      
+      if userId in bookings['current'][card].keys():
+        return bookings['current'][card][userId]
+      else:
+        return []
+        
+    except KeyError:
+      raise ConfigNotFoundError(f"Cannot find {card} or {userId} in config.")
+    

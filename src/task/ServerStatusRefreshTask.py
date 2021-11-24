@@ -26,9 +26,9 @@ class ServerStatusRefreshTask(commands.Cog):
     # Gets heart emoji for if server is active or not
     def get_server_active_emoji(self, serverList: dict, server: str) -> str:
         if serverList[server]['online'] == True:
-            return ':heart:'
+            return '<a:bluealert:912814858624450580>'
         else:
-            return ':broken_heart:'
+            return '<a:redalert:912814785832288367>'
     
     # Gets all credentials
     def get_server_credentials(self, serverList: dict, server:str) -> str:

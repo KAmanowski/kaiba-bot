@@ -46,4 +46,3 @@ class ConfigReader:
       return channel_id
     except KeyError:
       raise ConfigNotFoundError("Cannot find " + server + " or " + channel + " in config.")
-    
