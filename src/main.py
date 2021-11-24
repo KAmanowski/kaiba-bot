@@ -1,3 +1,6 @@
+from os import name
+from discord.activity import Activity
+from discord.enums import ActivityType
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
 import logging
@@ -31,6 +34,7 @@ def initialise_tasks(bot: Bot):
 logging.basicConfig(level=logging.INFO)
 
 bot = commands.Bot(command_prefix='£')
+bot.activity = Activity(name="your mum | £help", type=ActivityType.watching)
 bot.id = 850455972736794664
 
 initialise_commands(bot)
