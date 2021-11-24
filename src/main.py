@@ -3,7 +3,9 @@ from discord.activity import Activity
 from discord.enums import ActivityType
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
-import logging
+from pretty_help import PrettyHelp
+from pretty_help.menu import DefaultMenu
+
 from command.AnnounceCommand import AnnounceCommand
 from command.BookCommand import BookCommand
 from command.ParrotCommand import ParrotCommand
@@ -15,6 +17,9 @@ from task.RunCronJobsTask import RunCronJobsTask
 from task.ServerCommandBlockTask import ServerCommandBlockTask
 from task.ServerStatusRefreshTask import ServerStatusRefreshTask
 from util.ConfigReader import ConfigReader
+
+import logging
+import discord
 
 def initialise_commands(bot: Bot):
     bot.add_cog(RandCommand(bot))
@@ -31,9 +36,11 @@ def initialise_tasks(bot: Bot):
     #bot.add_cog(CountdownTask(bot))
     bot.add_cog(RunCronJobsTask(bot))
     
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 
-bot = commands.Bot(command_prefix='£')
+menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
+
+bot = commands.Bot(command_prefix='£', help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, index_title="Commands", color=discord.Color.dark_purple()))
 bot.activity = Activity(name="your mum | £help", type=ActivityType.watching)
 bot.id = 850455972736794664
 

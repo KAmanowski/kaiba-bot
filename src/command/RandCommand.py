@@ -9,12 +9,18 @@ from util.ErrorRaiser import ErrorRaiser
 
 
 class RandCommand(commands.Cog):
+    "£rand gives you a random number/decimal."
+    
+    help_brief = "£rand gives you a decimal between 0 and 1. Use £help rand for more arguments."
+    help_description = "£rand gives you a decimal between 0 and 1.\n\n \
+        £rand n will give a number from 0 to n.\n\n \
+        £rand n m will give a number from n to m."
     
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
     
-    @commands.command(brief='Gives you a random number.', description='[£rand n] will give a number from 0 to n, [£rand n m] will give a number from n to m.')
+    @commands.command(name="rand", brief=help_brief, description=help_description)
     async def rand(self, ctx: Context, *args):
         member: discord.Member = ctx.author
         argLen = len(args)

@@ -26,7 +26,7 @@ class BoysNightAnnounceJob():
             await channel.send(message)
             
     async def clear_current_bookings(self):
-        DynamicConfigWriter.task_migrate_bookings_to_history('yellow')
+        #DynamicConfigWriter.task_migrate_bookings_to_history('yellow')
         DynamicConfigWriter.task_migrate_bookings_to_history('red')
     
     async def run_job(self):
