@@ -12,8 +12,14 @@ from provider.Merlin import Merlin
 class ServerCommand(commands.Cog):
   "£server lets you interact with a game server."
   
-  help_brief = "Allows you to interact with a game server."
-  help_description = "Follow the below usage.\n\nCommands supported: start, kill, restart\nServers supported: valheim\n\nAbuse this and you will be soft-banned."
+  help_brief = "Need to boot up or restart a janky valheim server? Look no further than this command."
+  help_description = "Follow the below usage.\n\nCommands supported:\n\n\
+    \t• start\n\
+    \t• kill\n\
+    \t• restart\n\n\
+    Servers supported:\n\n\
+    \t• valheim\n\n\
+    Abuse this and you will be soft-banned."
   
   def __init__(self, bot):
       super().__init__()

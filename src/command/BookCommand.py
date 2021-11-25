@@ -15,11 +15,12 @@ from util.DynamicConfigWriter import DynamicConfigWriter
 class BookCommand(commands.Cog):
     "£book allows you to book someone with a yellow or red card."
     
-    SERVER = "kaiba"
+    SERVER = "test"
     CHANNEL = "bantercave"
     
-    help_brief = "Allows you to book someone with a yellow or red card."
-    help_description = "To book someone you need to choose a card (yellow/red), their userId (can just @) and a reason in quotes (\"Cause they stink.\")."
+    help_brief = "If a Kaiba Corp. member has broken the bro code or the Kaiba Corp. Terms of Service in some way - book 'em."
+    help_description = "To book someone you need to choose a card (yellow/red), their userId (can just @) and a reason (no need for quotes).\n\n\
+        Example: £book yellow @JLH Pussy bitch didn't turn up at the gym."
     
     def __init__(self, bot):
         super().__init__()
@@ -32,7 +33,7 @@ class BookCommand(commands.Cog):
         await channel.send(message)
         
     @commands.command(name="book", brief=help_brief, description=help_description)
-    async def book(self, ctx: Context, card, userId, reason):
+    async def book(self, ctx: Context, card, userId, *, reason):
         self.bot: Bot
             
         givenUserId = userId
@@ -72,6 +73,7 @@ class BookCommand(commands.Cog):
                     DynamicConfigWriter.command_book('red', user.id, booking)
 
             except NotFound:
-                await ctx.send(f'Cannot find user {card}')
+                await ctx.send(f"Cannot find user '{userId}' - either your Id is wrong or discord API is having issues.")
+                raise 
         else:
             await ctx.send('Card can only be yellow or red.')

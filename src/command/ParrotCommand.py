@@ -6,15 +6,16 @@ from discord.message import Message
 class ParrotCommand(commands.Cog):
     "£parrot makes the bot parrot what you say. Not very useful but I was bored."
     
-    help_brief = "The Parrot command makes Kaiba parrot what you say. It's basically a shorthand of the £announce command."
-    help_description = "£parrot \"message\" makes Kaiba delete your command message and repeat the message you gave it."
+    help_brief = "It's basically a shorthand of the £announce command."
+    help_description = "£parrot message makes Kaiba delete your command message and repeat the message you gave it.\n\n\
+        Example: £parrot You fucking stink."
     
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
         
     @commands.command(name="parrot", brief=help_brief, description=help_description)
-    async def parrot(self, ctx: Context, message):
+    async def parrot(self, ctx: Context, *, message):
         try:
             # Delete calling message
             await ctx.message.delete()

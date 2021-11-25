@@ -9,13 +9,21 @@ from util.ConfigReader import ConfigReader
 class AnnounceCommand(commands.Cog):
     "£announce lets you announce something as Kaiba."
   
-    help_brief = "Lets you announce something as Kaiba."
+    help_brief = "Ever wanted to make the bot say something in some other channel/server? No? Well fuck you, you can."
     help_description = "Can use this command in your private messages to Kaiba to not give away who used the command.\n\n\
         If you want to just send a message then just put your message in \"quotes\" as part of the messageIdOrMessage argument.\n\n\
-        You can also reply to another message as Kaiba - if you have a message Id, then put the Id in as the messageIdOrMessage argument and then put your message in\
-        place of the message argument.\ \n\n\
-        Servers supported: kaiba\n\n\
-        Channels supported: bantercave, servers, hearties, ttr (thingies to remember), valheim, dealhunters, bot, jukebox\n\n\
+        You can also reply to another message as Kaiba - if you have a message Id, then put the Id in as the messageIdOrMessage argument and then put your message in place of the message argument.\n\n\
+        Servers supported: \n\n\
+            \t• kaiba\n\n\
+        Channels supported: \n\n\
+            \t• bantercave \n\
+            \t• servers\n\
+            \t• hearties\n\
+            \t• ttr (thingies to remember)\n\
+            \t• valheim\n\
+            \t• dealhunters\n\
+            \t• bot\n\
+            \t• jukebox\n\n\
         Example of just a message: £announce kaiba bantercave \"Kill yourself.\"\n\n\
         Example of replying to another message: £announce kaiba bantercave <messageId> \"Kill yourself.\""
     
