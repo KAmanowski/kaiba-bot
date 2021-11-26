@@ -1,3 +1,4 @@
+from datetime import datetime
 import discord
 from discord.abc import User
 from discord.channel import TextChannel
@@ -56,14 +57,19 @@ class ClearCommand(commands.Cog):
             
             messages = []
             async for histMessage in channel.history(limit=int(amount)):
-                if user:
-                    if histMessage.author.id == user.id:     
+                histMessage: Message = histMessage
+                if (datetime.now() - histMessage.created_at).days < 14:
+                    if user:
+                        if histMessage.author.id == user.id:     
+                            messages.append(histMessage)
+                    else:
                         messages.append(histMessage)
-                else:
-                    messages.append(histMessage)
             
             await channel.delete_messages(messages)
             
         except Forbidden as e:
             await ctx.send("I don't have permissions to delete messages in this channel.")
+            raise e
+        except Exception as e:
+            await ctx.send("Something went wrong.") 
             raise e

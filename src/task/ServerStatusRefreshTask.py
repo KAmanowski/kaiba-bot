@@ -54,6 +54,7 @@ class ServerStatusRefreshTask(commands.Cog):
             
             message += f"{str.upper(server)} - {statusEmoji}\n\n{credentials}\n"
                 
+        message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
         return message
         
     @tasks.loop(seconds=10)
