@@ -43,7 +43,7 @@ class ServerStatusRefreshTask(commands.Cog):
             # Gets status of all servers from Merlin
             serverList = Merlin.get_all_server_status()
         except:
-            return "Merlin cannot retrieve server status."
+            return "Merlin is dead - cannot retrieve server status."
         
         message = ""
         
@@ -54,6 +54,7 @@ class ServerStatusRefreshTask(commands.Cog):
             
             message += f"{str.upper(server)} - {statusEmoji}\n\n{credentials}\n"
                 
+        message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
         return message
         
     @tasks.loop(seconds=10)

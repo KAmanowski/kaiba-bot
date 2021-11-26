@@ -9,6 +9,7 @@ from pretty_help.menu import DefaultMenu
 from command.AnnounceCommand import AnnounceCommand
 from command.BookCommand import BookCommand
 from command.ForfeitCommand import ForfeitCommand
+from command.ClearCommand import ClearCommand
 from command.ParrotCommand import ParrotCommand
 
 from command.PingCommand import PingCommand
@@ -31,18 +32,21 @@ def initialise_commands(bot: Bot):
     bot.add_cog(ParrotCommand(bot))
     bot.add_cog(BookCommand(bot))
     #bot.add_cog(ForfeitCommand(bot))
+    bot.add_cog(ClearCommand(bot))
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
     bot.add_cog(ServerCommandBlockTask(bot))
     #bot.add_cog(CountdownTask(bot))
-    bot.add_cog(RunCronJobsTask(bot))
+    #bot.add_cog(RunCronJobsTask(bot))
     
 logging.basicConfig(level=logging.ERROR)
 
 menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
 
-bot = commands.Bot(command_prefix='£', help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, index_title="Commands", color=discord.Color.dark_purple()))
+ending_note = "Use £help <command> for more details.\n\nExample: £help server"
+
+bot = commands.Bot(command_prefix='£', help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
 bot.activity = Activity(name="your mum | £help", type=ActivityType.watching)
 bot.id = 850455972736794664
 

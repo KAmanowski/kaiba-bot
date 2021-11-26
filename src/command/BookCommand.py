@@ -20,7 +20,7 @@ class BookCommand(commands.Cog):
     
     help_brief = "If a Kaiba Corp. member has broken the bro code or the Kaiba Corp. Terms of Service in some way - book 'em."
     help_description = "To book someone you need to choose a card (yellow/red), their userId (can just @) and a reason (no need for quotes).\n\n\
-        Example: £book yellow @JLH Pussy bitch didn't turn up at the gym."
+        Example: £book yellow @JLH Pussy bitch didn't turn up at the gym.\nor £book red"
     
     def __init__(self, bot):
         super().__init__()
