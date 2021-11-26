@@ -8,7 +8,7 @@ from pretty_help.menu import DefaultMenu
 
 from command.AnnounceCommand import AnnounceCommand
 from command.BookCommand import BookCommand
-from command.MessageCommand import MessageCommand
+from command.ClearCommand import ClearCommand
 from command.ParrotCommand import ParrotCommand
 
 from command.PingCommand import PingCommand
@@ -30,7 +30,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(AnnounceCommand(bot))
     bot.add_cog(ParrotCommand(bot))
     bot.add_cog(BookCommand(bot))
-    bot.add_cog(MessageCommand(bot))
+    bot.add_cog(ClearCommand(bot))
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
