@@ -31,7 +31,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(AnnounceCommand(bot))
     bot.add_cog(ParrotCommand(bot))
     bot.add_cog(BookCommand(bot))
-    #bot.add_cog(ForfeitCommand(bot))
+    bot.add_cog(ForfeitCommand(bot))
     bot.add_cog(ClearCommand(bot))
     
 def initialise_tasks(bot: Bot):
