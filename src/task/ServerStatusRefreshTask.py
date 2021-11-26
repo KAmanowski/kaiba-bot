@@ -43,7 +43,7 @@ class ServerStatusRefreshTask(commands.Cog):
             # Gets status of all servers from Merlin
             serverList = Merlin.get_all_server_status()
         except:
-            return "Merlin cannot retrieve server status."
+            return "Merlin is dead - cannot retrieve server status."
         
         message = ""
         
