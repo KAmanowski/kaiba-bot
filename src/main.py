@@ -13,6 +13,7 @@ from command.ParrotCommand import ParrotCommand
 
 from command.PingCommand import PingCommand
 from command.RandCommand import RandCommand
+from command.SayCommand import SayCommand
 from command.ServerCommand import ServerCommand
 from task.RunCronJobsTask import RunCronJobsTask
 from task.ServerCommandBlockTask import ServerCommandBlockTask
@@ -31,6 +32,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(ParrotCommand(bot))
     bot.add_cog(BookCommand(bot))
     bot.add_cog(ClearCommand(bot))
+    bot.add_cog(SayCommand(bot))
     
 def initialise_tasks(bot: Bot):
     bot.add_cog(ServerStatusRefreshTask(bot))
