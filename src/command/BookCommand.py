@@ -15,7 +15,7 @@ from util.DynamicConfigWriter import DynamicConfigWriter
 class BookCommand(commands.Cog):
     "£book allows you to book someone with a yellow or red card."
     
-    SERVER = "test"
+    SERVER = "kaiba"
     CHANNEL = "bantercave"
     
     help_brief = "If a Kaiba Corp. member has broken the bro code or the Kaiba Corp. Terms of Service in some way - book 'em."

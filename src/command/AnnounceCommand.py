@@ -14,8 +14,7 @@ class AnnounceCommand(commands.Cog):
         If you want to just send a message then just put your message in \"quotes\" as part of the messageIdOrMessage argument.\n\n\
         You can also reply to another message as Kaiba - if you have a message Id, then put the Id in as the messageIdOrMessage argument and then put your message in place of the message argument.\n\n\
         Servers supported: \n\n\
-            \t• kaiba\n\n\
-        Channels supported: \n\n\
+            \t• kaiba\n\nChannels supported: \n\n\
             \t• bantercave \n\
             \t• servers\n\
             \t• hearties\n\

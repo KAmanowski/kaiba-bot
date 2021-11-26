@@ -16,8 +16,7 @@ class ServerCommand(commands.Cog):
   help_description = "Follow the below usage.\n\nCommands supported:\n\n\
     \t• start\n\
     \t• kill\n\
-    \t• restart\n\n\
-    Servers supported:\n\n\
+    \t• restart\n\nServers supported:\n\n\
     \t• valheim\n\n\
     Abuse this and you will be soft-banned."
   
@@ -66,15 +65,15 @@ class ServerCommand(commands.Cog):
         match givenCommand:
           case 'start':
             await self.start_server(ctx, givenServer)
+            blocker.update_counter(username)
           case 'kill':
             await self.kill_server(ctx, givenServer)
+            blocker.update_counter(username)
           case 'restart':
             await self.restart_server(ctx, givenServer)
+            blocker.update_counter(username, 2)
           case _:
             await ctx.send(command + ' is not a valid command.')
-          
-          # Update the blocker counter after successful command
-        blocker.update_counter(username)
       
       except BadInputException as e:
         # If Merlin can't find a server given to it by the user 
@@ -83,9 +82,10 @@ class ServerCommand(commands.Cog):
       except MerlinErrorException:
         # Misc Merlin error
         await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
-      except:
+      except Exception as e:
         # Something else went wrong
         await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')
+        raise e
       
       # Unlocks server command when everything is finished
       self.lock = False

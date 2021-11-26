@@ -47,4 +47,11 @@ class DynamicConfigReader:
         
     except KeyError:
       raise ConfigNotFoundError(f"Cannot find {card} or {userId} in config.")
+  
+  def command_get_forfeits() -> list:
+    try:
+      file_name = '../dynamic-config/forfeit.json'
+      return DynamicConfigReader.get_json(file_name)['forfeits']     
+    except KeyError:
+      raise ConfigNotFoundError(f"Cannot find forfeits in config.")
     

@@ -77,3 +77,14 @@ class DynamicConfigWriter():
       DynamicConfigWriter.save_json(file_name, bookings)
     except KeyError:
       raise ConfigNotFoundError(f"Cannot find {card} in config.")
+    
+  def command_write_forfeits(forfeits: list):
+    try:
+      file_name = '../dynamic-config/forfeit.json'
+      forfeitJson = DynamicConfigWriter.get_json(file_name)
+      
+      forfeitJson['forfeits'] = forfeits
+        
+      DynamicConfigWriter.save_json(file_name, forfeitJson)
+    except KeyError:
+      raise ConfigNotFoundError(f"Cannot find {card} in config.")

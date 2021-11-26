@@ -27,11 +27,11 @@ class ServerCommandBlockTask(commands.Cog):
         self.lastNaughties: dict = {}
         self.remove_server_command_blocks.start()
         
-    def update_counter(self, userId: str):
+    def update_counter(self, userId: str, amount=1):
         if userId in self.naughties:
-            self.naughties[userId] = self.naughties[userId] + 1
+            self.naughties[userId] = self.naughties[userId] + amount
         else:
-            self.naughties[userId] = 1
+            self.naughties[userId] = amount
         
     def can_use_command(self, userId: str) -> bool:
         if userId in self.naughties:
