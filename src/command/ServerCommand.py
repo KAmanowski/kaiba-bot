@@ -43,21 +43,21 @@ class ServerCommand(commands.Cog):
       
   @commands.command(name="server", brief=help_brief, description=help_description)
   async def server(self, ctx: Context, command, server):
-    self.message: Message = None     
-    bot: Bot = self.bot
-    
-    blocker: ServerCommandBlockTask = bot.get_cog('ServerCommandBlockTask')
-    username: str = ctx.message.author.name
-    
-    if blocker.can_use_command(username) == False:
-      await ctx.send(f"You've used too many server commands in a short time, {username}. You have been soft banned for some time.")
-      return
+    if self.lock == False:
+      # Lock server command so no one else can use it
+      self.lock = True
+      self.message: Message = None     
+      bot: Bot = self.bot
+      
+      blocker: ServerCommandBlockTask = bot.get_cog('ServerCommandBlockTask')
+      username: str = ctx.message.author.name
+      
+      if blocker.can_use_command(username) == False:
+        await ctx.send(f"You've used too many server commands in a short time, {username}. You have been soft banned for some time.")
+        return
     
     # If no server command is currently in progress
-    if self.lock == False:
       try:
-        # Lock server command so no one else can use it
-        self.lock = True
         
         # Convert each argument to lowercase
         givenCommand = str.lower(command)
@@ -83,10 +83,11 @@ class ServerCommand(commands.Cog):
       except MerlinErrorException:
         # Misc Merlin error
         await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
-      except:
+      except Exception as e:
         # Something else went wrong
         await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')
-      
+        self.lock = False
+        raise e
       # Unlocks server command when everything is finished
       self.lock = False
     else:

@@ -5,7 +5,7 @@ from exception.MerlinErrorException import MerlinErrorException
 
 class Merlin():
   
-  baseUrl: str = "http://192.168.1.3:7331/"
+  baseUrl: str = "http://192.168.1.192:7331/"
   
   # Merlin return example:
   # {
@@ -20,7 +20,7 @@ class Merlin():
   def get_all_server_status():
     url = Merlin.baseUrl + "/server"
     
-    res = requests.get(url=url, timeout=10)
+    res = requests.get(url=url, timeout=15)
     
     if (res.status_code != 200):
       raise MerlinErrorException("Merlin is unavailable.")
