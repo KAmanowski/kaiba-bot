@@ -79,7 +79,7 @@ class ServerCommand(commands.Cog):
         # If Merlin can't find a server given to it by the user 
         await self.message.edit(content="Merlin says you fucked up: '" + str(e) + "'")
         await ctx.send('<:disgust2:906313723147354173>')
-        logging.info(f"{ctx.message.author.id} tried to be naughty: " + str(e))
+        logging.info(f"{ctx.message.author.name} tried to be naughty: " + str(e))
       except MerlinErrorException as e:
         # Misc Merlin error
         await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
