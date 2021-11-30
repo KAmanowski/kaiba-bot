@@ -1,3 +1,4 @@
+import logging
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.context import Context
@@ -6,8 +7,6 @@ from exception.BadInputException import BadInputException
 from exception.MerlinErrorException import MerlinErrorException
 
 from task.ServerCommandBlockTask import ServerCommandBlockTask
-
-from provider.Merlin import Merlin
 
 class ServerCommand(commands.Cog):
   "£server lets you interact with a game server."
@@ -28,17 +27,17 @@ class ServerCommand(commands.Cog):
       
   async def start_server(self, ctx: Context, server: str):
     self.message = await ctx.send('Attempting to start server ' + str.upper(server) + '.')
-    Merlin.server_command(server, 'start')
+    self.bot.merlin.server_command(server, 'start')
     await self.message.edit(content='<:coolio:802363745170358282> Server ' + str.upper(server) + ' has been started - just give it a couple of seconds to set up.')
   
   async def kill_server(self, ctx: Context, server: str):
     self.message = await ctx.send('Attempting to kill server ' + str.upper(server) + '.')
-    Merlin.server_command(server, 'kill')
+    self.bot.merlin.server_command(server, 'kill')
     await self.message.edit(content='<:pain:797622064701636648> Server ' + str.upper(server) + ' has been killed')
   
   async def restart_server(self, ctx: Context, server: str):
     self.message = await ctx.send('Attempting to restart server ' + str.upper(server) + '.')
-    Merlin.server_command(server, 'restart')
+    self.bot.merlin.server_command(server, 'restart')
     await self.message.edit(content='<:nut:802365320458403861> Server ' + str.upper(server) + ' has been restarted')
       
   @commands.command(name="server", brief=help_brief, description=help_description)
@@ -80,14 +79,16 @@ class ServerCommand(commands.Cog):
         # If Merlin can't find a server given to it by the user 
         await self.message.edit(content="Merlin says you fucked up: '" + str(e) + "'")
         await ctx.send('<:disgust2:906313723147354173>')
-      except MerlinErrorException:
+        logging.info(f"{ctx.message.author.id} tried to be naughty: " + str(e))
+      except MerlinErrorException as e:
         # Misc Merlin error
         await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
+        logging.error("Merlin server command fail, Merlin related: " + str(e))
       except Exception as e:
         # Something else went wrong
         await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')
         self.lock = False
-        raise e
+        logging.error("Merlin server command fail, not Merlin related: " + str(e))
       # Unlocks server command when everything is finished
       self.lock = False
     else:
