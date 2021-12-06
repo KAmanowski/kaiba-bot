@@ -19,10 +19,13 @@ from task.RunCronJobsTask import RunCronJobsTask
 from task.ServerCommandBlockTask import ServerCommandBlockTask
 from task.ServerStatusRefreshTask import ServerStatusRefreshTask
 from util.ConfigReader import ConfigReader
+from rich.logging import RichHandler
 
 import logging
-from rich.logging import RichHandler
+import sys
 import discord
+
+DEV_MODE = (len(sys.argv) > 1 and sys.argv[1] == 'dev')
 
 def initialise_commands(bot: Bot):
     bot.add_cog(RandCommand(bot))
@@ -35,7 +38,10 @@ def initialise_commands(bot: Bot):
     bot.add_cog(ClearCommand(bot))
     
 def initialise_tasks(bot: Bot):
-    bot.add_cog(ServerStatusRefreshTask(bot))
+    # Restricted tasks only for live
+    if not DEV_MODE:
+        bot.add_cog(ServerStatusRefreshTask(bot))
+        
     bot.add_cog(ServerCommandBlockTask(bot))
     #bot.add_cog(CountdownTask(bot))
     #bot.add_cog(RunCronJobsTask(bot))
@@ -48,14 +54,23 @@ def initialise_logger():
     
 initialise_logger()
 
+cmd_prefix = '£'
+
+logging.info(f'DEV MODE: {DEV_MODE}')
+
+# Check environment
+if DEV_MODE:
+    cmd_prefix = '££'
+    
+# Help menu setup
 menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
-
 ending_note = "Use £help <command> for more details.\n\nExample: £help server"
-
-bot = commands.Bot(command_prefix='£', help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
-bot.activity = Activity(name="your mum | £help", type=ActivityType.watching)
+ 
+bot = commands.Bot(command_prefix=cmd_prefix, help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
+bot.activity = Activity(name=f"your mum | {cmd_prefix}help", type=ActivityType.watching)
 bot.id = 850455972736794664
 bot.merlin = Merlin()
+bot.dev_mode = DEV_MODE
 
 initialise_commands(bot)
 initialise_tasks(bot)
