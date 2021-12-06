@@ -35,8 +35,8 @@ class Merlin():
     #     "valheim": {
     #         "online": true,
     #         "credentials": {
-    #             "ip": "86.175.7.127:2456",
-    #             "password": "davinky "
+    #             "port": "port",
+    #             "password": "password"
     #         }
     #     }
     #   ]
