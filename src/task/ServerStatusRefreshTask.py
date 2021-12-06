@@ -1,11 +1,8 @@
-from typing import Text, Union
-from discord.abc import GuildChannel, PrivateChannel
+import logging
 from discord.channel import TextChannel
 from discord.ext import commands, tasks
 from discord.ext.commands.bot import Bot
-from discord.ext.commands.context import Context
 from discord.message import Message
-from provider.Merlin import Merlin
 from exception.MerlinErrorException import MerlinErrorException
 
 
@@ -41,20 +38,21 @@ class ServerStatusRefreshTask(commands.Cog):
         serverList = None
         try:
             # Gets status of all servers from Merlin
-            serverList = Merlin.get_all_server_status()
-        except:
-            return "Merlin is dead - cannot retrieve server status."
+            serverList = self.bot.merlin.get_all_server_status()
+        except MerlinErrorException as e:          
+            logging.error("Merlin error: " + str(e))
+            return "Merlin is offline/dead. No server status can be retrieved."
         
-        message = ""
+        message = f"External IP: {serverList['external-ip']}\n\n"
         
         # Builds server message
-        for server in serverList:
-            statusEmoji = self.get_server_active_emoji(serverList, server)
-            credentials = self.get_server_credentials(serverList, server)
+        for server in serverList['servers']:
+            statusEmoji = self.get_server_active_emoji(serverList['servers'], server)
+            credentials = self.get_server_credentials(serverList['servers'], server)
             
-            message += f"{str.upper(server)} - {statusEmoji}\n\n{credentials}\n"
+            message += f"{str.upper(server)} - {statusEmoji}\n{credentials}\n\n"
                 
-        message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
+       # message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
         return message
         
     @tasks.loop(seconds=10)
@@ -67,17 +65,19 @@ class ServerStatusRefreshTask(commands.Cog):
         # Get 'servers' channel in KaibaCorp server
         channel = bot.get_channel(DynamicConfigReader.task_get_channel_id(ServerStatusRefreshTask.task_name))
 
-        message: Message = None           
+        message: Message = None        
+        
+        serverInfo = self.get_server_info()   
         
         try:
             isinstance(channel, TextChannel)
             # Fetch message with last known ID
             message = await channel.fetch_message(DynamicConfigReader.task_get_message_id(ServerStatusRefreshTask.task_name))
             # If found, edit the existing message
-            await message.edit(content=self.get_server_info())
+            await message.edit(content=serverInfo)
         except discord.NotFound:
             # If the server message was deleted and thus can't be found, just send a new one
-            message = await channel.send(self.get_server_info())
+            message = await channel.send(serverInfo)
             # Save the Id of the new message to update for next iteration of this task in 10 seconds
             DynamicConfigWriter.task_write_message_id(ServerStatusRefreshTask.task_name, message.id)
             

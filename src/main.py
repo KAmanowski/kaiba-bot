@@ -15,12 +15,14 @@ from command.ParrotCommand import ParrotCommand
 from command.PingCommand import PingCommand
 from command.RandCommand import RandCommand
 from command.ServerCommand import ServerCommand
+from provider.Merlin import Merlin
 from task.RunCronJobsTask import RunCronJobsTask
 from task.ServerCommandBlockTask import ServerCommandBlockTask
 from task.ServerStatusRefreshTask import ServerStatusRefreshTask
 from util.ConfigReader import ConfigReader
 
 import logging
+from rich.logging import RichHandler
 import discord
 
 def initialise_commands(bot: Bot):
@@ -40,7 +42,13 @@ def initialise_tasks(bot: Bot):
     #bot.add_cog(CountdownTask(bot))
     #bot.add_cog(RunCronJobsTask(bot))
     
-logging.basicConfig(level=logging.ERROR)
+def initialise_logger():
+    FORMAT = "%(message)s"
+    logging.basicConfig(
+        level=logging.INFO, format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+    )  # set level=20 or logging.INFO to turn of debug
+    
+initialise_logger()
 
 menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
 
@@ -49,6 +57,7 @@ ending_note = "Use £help <command> for more details.\n\nExample: £help server"
 bot = commands.Bot(command_prefix='£', help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
 bot.activity = Activity(name="your mum | £help", type=ActivityType.watching)
 bot.id = 850455972736794664
+bot.merlin = Merlin()
 
 initialise_commands(bot)
 initialise_tasks(bot)
