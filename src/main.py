@@ -54,15 +54,17 @@ def initialise_logger():
     
 initialise_logger()
 
-menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
-
-ending_note = "Use £help <command> for more details.\n\nExample: £help server"
-
 cmd_prefix = '£'
+
 logging.info(f'DEV MODE: {DEV_MODE}')
+
 # Check environment
 if DEV_MODE:
     cmd_prefix = '££'
+    
+# Help menu setup
+menu = DefaultMenu(page_left="👈", page_right="👉", remove="❌", active_time=120, delete_after_timeout=False)
+ending_note = "Use £help <command> for more details.\n\nExample: £help server"
  
 bot = commands.Bot(command_prefix=cmd_prefix, help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
 bot.activity = Activity(name=f"your mum | {cmd_prefix}help", type=ActivityType.watching)
