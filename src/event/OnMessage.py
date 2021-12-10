@@ -21,6 +21,5 @@ class OnMessageEvent(commands.Cog):
       message_content += f"{part} "
       
     message.content = message_content
-    logging.info(message.content)
     
     await self.bot.process_commands(message)
