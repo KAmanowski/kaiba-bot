@@ -12,5 +12,15 @@ class OnMessageEvent(commands.Cog):
       
   @commands.Cog.listener()
   async def on_message(self, message: Message):
-    message.content = str.lower(message.content)
+    splitMessage = message.content.split(' ')
+    splitMessage[0] = str.lower(splitMessage[0])
+    
+    message_content = ""
+    
+    for part in splitMessage:
+      message_content += f"{part} "
+      
+    message.content = message_content
+    logging.info(message.content)
+    
     await self.bot.process_commands(message)
