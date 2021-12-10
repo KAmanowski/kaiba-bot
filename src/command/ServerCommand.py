@@ -41,6 +41,7 @@ class ServerCommand(commands.Cog):
     await self.message.edit(content='<:nut:802365320458403861> Server ' + str.upper(server) + ' has been restarted')
       
   @commands.command(name="server", brief=help_brief, description=help_description)
+  @commands.cooldown(rate=1, per=15)
   async def server(self, ctx: Context, command, server):
     if self.lock == False:
       # Lock server command so no one else can use it
