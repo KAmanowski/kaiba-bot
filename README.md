@@ -64,3 +64,10 @@ Example: `£parrot "Shut up."`
 
 # Requests
 If you have an idea for what you want the bot to be able to do, raise an issue for it or tell me and I'll do it.
+
+# Install
+- Install Python 3.10+
+	- Make sure to tick the 'Add to PATH' checkmark when intalling.
+- Navigate to /scripts/install.bat and run it.
+- Get your bot API key from discord and slap it into auth.json in /src/config.
+- That should be it.
