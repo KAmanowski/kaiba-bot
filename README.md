@@ -70,4 +70,4 @@ If you have an idea for what you want the bot to be able to do, raise an issue f
 	- Make sure to tick the 'Add to PATH' checkmark when intalling.
 - Navigate to /scripts/install.bat and run it.
 - Get your bot API key from discord and slap it into auth.json in /src/config.
-- That should be it.
+- Run `python src/main.py`.
