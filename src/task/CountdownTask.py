@@ -16,7 +16,7 @@ import discord
 
 class CountdownTicker():
   
-  def __init__(self, secondsLeft: int, channelId: int, messageId: int, countdownMessage: str = null, timeUpMessage: str = null):
+  def __init__(self, secondsLeft: int, channelId: int, messageId: int, countdownMessage: str, timeUpMessage: str):
       self.secondsLeft = secondsLeft
       self.channelId = channelId
       self.messageId = messageId
@@ -28,8 +28,6 @@ class CountdownTask(commands.Cog):
     MAX_COMMANDS = 5
     
     task_name = 'countdown'
-
-    custom_message = null
     
     def __init__(self, bot):
       super().__init__()
@@ -37,12 +35,12 @@ class CountdownTask(commands.Cog):
       self.ctds = []
       self.isRunning = False
       
-    def formatSeconds(self, seconds: int) -> str:
-      if seconds is not None:
-        d = seconds // (3600 * 24)
-        h = seconds // 3600 % 24
-        m = seconds % 3600 // 60
-        s = seconds % 3600 % 60
+    def formatSeconds(self, ticker: CountdownTicker) -> str:
+      if ticker.secondsLeft is not None:
+        d = ticker.secondsLeft // (3600 * 24)
+        h = ticker.secondsLeft // 3600 % 24
+        m = ticker.secondsLeft % 3600 // 60
+        s = ticker.secondsLeft % 3600 % 60
         if d > 0:
             return '{:02d}D {:02d}H {:02d}m {:02d}s'.format(d, h, m, s)
         elif h > 0:
@@ -51,7 +49,10 @@ class CountdownTask(commands.Cog):
             return '{:02d}m {:02d}s'.format(m, s)
         elif s > 0:
             return '{:02d}s'.format(s)
-      return "Time's up you fucks."
+      if (ticker.timeUpMessage != None):
+        return ticker.timeUpMessage
+      else:
+        return "Time's up you fucks!"
       
     def start_countdown(self):
       self.countdown.start()
@@ -61,8 +62,8 @@ class CountdownTask(commands.Cog):
       self.countdown.stop()
       self.isRunning = False
         
-    def add_ctd(self, secondsLeft: int, channelId: int, messageId: int):
-      self.ctds.append(CountdownTicker(secondsLeft, channelId, messageId))
+    def add_ctd(self, secondsLeft: int, channelId: int, messageId: int, countdownMessage: str = None, timeUpMessage: str = None):
+      self.ctds.append(CountdownTicker(secondsLeft, channelId, messageId, countdownMessage, timeUpMessage))
       
       if (not self.isRunning):
         self.start_countdown()
@@ -77,7 +78,6 @@ class CountdownTask(commands.Cog):
       for ticker in self.ctds:
         try:
           ticker: CountdownTicker
-          print(ticker)
           if (ticker.secondsLeft == 0):
             self.ctds.pop(i)
             continue
@@ -87,10 +87,15 @@ class CountdownTask(commands.Cog):
           isinstance(channel, TextChannel)
           
           message = await channel.fetch_message(ticker.messageId)
-          print("fetched message")
+
           # If found, edit the existing message
-          await message.edit(content=self.formatSeconds(ticker.secondsLeft))
-          print("Done")
+          if (ticker.secondsLeft == 0):
+            await channel.send(self.formatSeconds(ticker))
+            await message.delete()
+          elif (ticker.countdownMessage == None):
+            await message.edit(content=self.formatSeconds(ticker))
+          else:
+            await message.edit(content=f"{ticker.countdownMessage}: {self.formatSeconds(ticker)}")
           i = i + 1
         except discord.NotFound:
           self.ctds.pop(i)       
