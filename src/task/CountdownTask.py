@@ -16,16 +16,20 @@ import discord
 
 class CountdownTicker():
   
-  def __init__(self, secondsLeft: int, channelId: int, messageId: int):
+  def __init__(self, secondsLeft: int, channelId: int, messageId: int, countdownMessage: str = null, timeUpMessage: str = null):
       self.secondsLeft = secondsLeft
       self.channelId = channelId
       self.messageId = messageId
+      self.countdownMessage = countdownMessage
+      self.timeUpMessage = timeUpMessage
 
 class CountdownTask(commands.Cog):
     
     MAX_COMMANDS = 5
     
     task_name = 'countdown'
+
+    custom_message = null
     
     def __init__(self, bot):
       super().__init__()
