@@ -21,9 +21,7 @@ class TequilaCommand(commands.Cog):
     SECS_HOUR = 60 * 60
     SECS_DAY = 60 * 60 * 24
 
-    DEFAULT_TEQUILA_SECONDS = 1200
-
-    CURRENT_SETTING = DEFAULT_TEQUILA_SECONDS
+    CURRENT_SETTING = 1200
     
     def __init__(self, bot):
         super().__init__()
@@ -58,9 +56,6 @@ class TequilaCommand(commands.Cog):
                 
                 validArgs = ['s', 'm', 'h', 'd']
 
-                if (len(timeArgs) == 1 and timeArgs[0] == 'default'):
-                    self.CURRENT_SETTING = self.DEFAULT_TEQUILA_SECONDS
-                
                 for i in range(len(timeArgs)):
                     if timeArgs[i] in validArgs:
                         # For every second, minute, hour or day argument add the equivalent amount of seconds
