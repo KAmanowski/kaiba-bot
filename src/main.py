@@ -1,3 +1,4 @@
+import imp
 from os import name
 from discord.activity import Activity
 from discord.enums import ActivityType
@@ -10,6 +11,7 @@ from command.AnnounceCommand import AnnounceCommand
 from command.BookCommand import BookCommand
 from command.ClearCommand import ClearCommand
 from command.ParrotCommand import ParrotCommand
+from command.TequilaCountdown import TequilaCommand
 
 from command.PingCommand import PingCommand
 from command.RandCommand import RandCommand
@@ -17,9 +19,11 @@ from command.ServerCommand import ServerCommand
 from event.OnCommandError import OnCommandError
 from event.OnMessage import OnMessageEvent
 from provider.Merlin import Merlin
+
 from task.RunCronJobsTask import RunCronJobsTask
 from task.ServerCommandBlockTask import ServerCommandBlockTask
 from task.ServerStatusRefreshTask import ServerStatusRefreshTask
+from task.CountdownTask import CountdownTask
 from util.ConfigReader import ConfigReader
 from rich.logging import RichHandler
 
@@ -38,6 +42,7 @@ def initialise_commands(bot: Bot):
     bot.add_cog(ParrotCommand(bot))
     bot.add_cog(BookCommand(bot))
     bot.add_cog(ClearCommand(bot))
+    bot.add_cog(TequilaCommand(bot))
     
 def initialise_tasks(bot: Bot):
     # Restricted tasks only for live
@@ -45,7 +50,7 @@ def initialise_tasks(bot: Bot):
         bot.add_cog(ServerStatusRefreshTask(bot))
         
     bot.add_cog(ServerCommandBlockTask(bot))
-    #bot.add_cog(CountdownTask(bot))
+    bot.add_cog(CountdownTask(bot))
     #bot.add_cog(RunCronJobsTask(bot))
     
 def initialise_events(bot: Bot):

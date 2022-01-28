@@ -5,6 +5,7 @@ from discord.ext.commands.context import Context
 from discord.message import Message
 from exception.BadInputException import BadInputException
 from exception.MerlinErrorException import MerlinErrorException
+from util.Emojis import Emojis
 
 from task.ServerCommandBlockTask import ServerCommandBlockTask
 
@@ -26,19 +27,19 @@ class ServerCommand(commands.Cog):
       self.lock = False
       
   async def start_server(self, ctx: Context, server: str):
-    self.message = await ctx.send('Attempting to start server ' + str.upper(server) + '.')
+    self.message = await ctx.send(f'Attempting to start server {str.upper(server)}.')
     self.bot.merlin.server_command(server, 'start')
-    await self.message.edit(content='<:coolio:802363745170358282> Server ' + str.upper(server) + ' has been started - just give it a couple of seconds to set up.')
+    await self.message.edit(content=f'{Emojis.COOLIO} Server {str.upper(server)} has been started - just give it a couple of seconds to set up.')
   
   async def kill_server(self, ctx: Context, server: str):
-    self.message = await ctx.send('Attempting to kill server ' + str.upper(server) + '.')
+    self.message = await ctx.send(f'Attempting to kill server {str.upper(server)}.')
     self.bot.merlin.server_command(server, 'kill')
-    await self.message.edit(content='<:pain:797622064701636648> Server ' + str.upper(server) + ' has been killed')
+    await self.message.edit(content=f'{Emojis.PAIN} Server {str.upper(server)} has been killed')
   
   async def restart_server(self, ctx: Context, server: str):
-    self.message = await ctx.send('Attempting to restart server ' + str.upper(server) + '.')
+    self.message = await ctx.send(f'Attempting to restart server {str.upper(server)}.')
     self.bot.merlin.server_command(server, 'restart')
-    await self.message.edit(content='<:nut:802365320458403861> Server ' + str.upper(server) + ' has been restarted')
+    await self.message.edit(content=f'{Emojis.NUT} Server {str.upper(server)} has been restarted')
       
   @commands.command(name="server", brief=help_brief, description=help_description)
   @commands.cooldown(rate=1, per=15)
@@ -53,7 +54,7 @@ class ServerCommand(commands.Cog):
       username: str = ctx.message.author.name
       
       if blocker.can_use_command(username) == False:
-        await ctx.send(f"You've used too many server commands in a short time, {username}. You have been soft banned for some time.")
+        await ctx.send(f"You've used too many server commands in a shot time, {username}. You have been soft banned for some time.")
         return
     
     # If no server command is currently in progress
