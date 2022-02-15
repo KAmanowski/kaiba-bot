@@ -3,8 +3,8 @@ import requests
 from exception.BadInputException import BadInputException
 
 from exception.MerlinErrorException import MerlinErrorException
+from util.ConfigReader import ConfigReader
 from util.IPGrabber import IPGrabber
-import urllib3.exceptions
 
 class Merlin():
   
@@ -14,7 +14,7 @@ class Merlin():
     self.rebuild_url()
     
   def rebuild_url(self):
-    self.baseUrl = f"http://{IPGrabber.grab_internal_ip()}:7331/"
+    self.baseUrl = f"http://{ConfigReader.get_startup_config('merlin-ip')}:7331/"
     logging.warning(f"Rebuilding Merlin IP to {self.baseUrl}")
     
   def error_handle(self, e: Exception):
