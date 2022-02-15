@@ -68,7 +68,7 @@ class CountdownTask(commands.Cog):
       if (not self.isRunning):
         self.start_countdown()
         
-    @tasks.loop(seconds=1)
+    @tasks.loop(seconds=2)
     async def countdown(self):
       if len(self.ctds) == 0:
         self.stop_countdown()
@@ -82,7 +82,7 @@ class CountdownTask(commands.Cog):
             self.ctds.pop(i)
             continue
           
-          ticker.secondsLeft = ticker.secondsLeft - 1
+          ticker.secondsLeft = ticker.secondsLeft - 2
           channel = self.bot.get_channel(ticker.channelId)
           isinstance(channel, TextChannel)
           
