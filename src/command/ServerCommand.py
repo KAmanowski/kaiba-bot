@@ -5,6 +5,7 @@ from discord.ext.commands.context import Context
 from discord.message import Message
 from exception.BadInputException import BadInputException
 from exception.MerlinErrorException import MerlinErrorException
+from exception.ServerNotKillableException import ServerNotKillableException
 from util.Emojis import Emojis
 
 from task.ServerCommandBlockTask import ServerCommandBlockTask
@@ -86,6 +87,8 @@ class ServerCommand(commands.Cog):
         # Misc Merlin error
         await self.message.edit(content='Merlin is offline/has died. Try again, maybe it might work.')
         logging.error("Merlin server command fail, Merlin related: " + str(e))
+      except ServerNotKillableException as e:
+        await self.message.edit(content='This server requires manual killing. Kaiba cannot automate this.')
       except Exception as e:
         # Something else went wrong
         await self.message.edit(content='Alright, not even I know what went wrong. No server command for you.')

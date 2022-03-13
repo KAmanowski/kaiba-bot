@@ -50,7 +50,7 @@ class ServerStatusRefreshTask(commands.Cog):
             statusEmoji = self.get_server_active_emoji(serverList['servers'], server)
             credentials = self.get_server_credentials(serverList['servers'], server)
             
-            message += f"{str.upper(server)} - {statusEmoji}\n{credentials}\n\n"
+            message += f"{str.upper(server)} - {statusEmoji}\n{credentials}\n"
                 
        # message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
         return message

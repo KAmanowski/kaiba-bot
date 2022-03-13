@@ -1,0 +1,2 @@
+class ServerNotKillableException(Exception):
+  pass
