@@ -3,6 +3,7 @@ import requests
 from exception.BadInputException import BadInputException
 
 from exception.MerlinErrorException import MerlinErrorException
+from exception.ServerNotKillableException import ServerNotKillableException
 from util.ConfigReader import ConfigReader
 from util.IPGrabber import IPGrabber
 
@@ -64,6 +65,8 @@ class Merlin():
     
     if res.status_code == 400:
       raise BadInputException(res.json()['reason'])
+    if command == "kill" and res.status_code == 501:
+        raise ServerNotKillableException(f"Server {server} needs to be killed manually.")
     if res.status_code != 200:
       raise MerlinErrorException(f"Merlin is unavailable. Status code: {str(res.status_code)}, JSON: {str(res.json())}")
     
