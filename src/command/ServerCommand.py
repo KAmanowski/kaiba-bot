@@ -20,6 +20,7 @@ class ServerCommand(commands.Cog):
     \t• restart\n\n\
     Servers supported:\n\n\
     \t• valheim\n\n\
+    \t• pz (Project Zomboid)\n\n\
     Abuse this and you will be soft-banned."
   
   def __init__(self, bot):
