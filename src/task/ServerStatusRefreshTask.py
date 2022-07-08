@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 from discord.channel import TextChannel
 from discord.ext import commands, tasks
@@ -53,6 +54,8 @@ class ServerStatusRefreshTask(commands.Cog):
             message += f"{str.upper(server)} - {statusEmoji}\n{credentials}\n"
                 
        # message += f"Github Repo: https://github.com/KAmanowski/kaiba-bot"
+        message += f"Last refresh: {datetime.today().strftime('%a %d/%m/%y at %H:%M:%S')}"
+
         return message
         
     @tasks.loop(seconds=10)
