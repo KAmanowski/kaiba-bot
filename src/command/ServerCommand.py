@@ -21,6 +21,7 @@ class ServerCommand(commands.Cog):
     Servers supported:\n\n\
     \t• valheim\n\n\
     \t• pz (Project Zomboid)\n\n\
+    \t• minecraft\n\n\
     Abuse this and you will be soft-banned."
   
   def __init__(self, bot):
