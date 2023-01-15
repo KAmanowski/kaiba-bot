@@ -80,7 +80,7 @@ ending_note = "Use £help <command> for more details.\n\nExample: £help server"
 bot = commands.Bot(command_prefix=cmd_prefix, help_command=PrettyHelp(menu=menu, sort_commands=True, show_index=True, ending_note=ending_note, index_title="Commands", color=discord.Color.dark_purple()))
 bot.activity = Activity(name=f"your mum | {cmd_prefix}help", type=ActivityType.watching)
 bot.id = 850455972736794664
-bot.merlin = Merlin()
+bot.merlin = Merlin(DEV_MODE)
 bot.dev_mode = DEV_MODE
 bot.cmd_prefix = cmd_prefix
 

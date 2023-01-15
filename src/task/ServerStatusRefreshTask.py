@@ -61,6 +61,9 @@ class ServerStatusRefreshTask(commands.Cog):
     @tasks.loop(seconds=10)
     async def update_server_status_message(self):
         bot: Bot = self.bot
+
+        if (bot.dev_mode):
+            return
         
         # If bot is just started up, wait until it's ready
         await bot.wait_until_ready()

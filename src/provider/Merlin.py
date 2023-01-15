@@ -9,13 +9,14 @@ from util.IPGrabber import IPGrabber
 
 class Merlin():
   
-  def __init__(self):
+  def __init__(self, devMode: bool):
     self.baseUrl = ""
     self.lostConnection = False
+    self.port = (7332 if devMode else 7331)
     self.rebuild_url()
     
   def rebuild_url(self):
-    self.baseUrl = f"http://{ConfigReader.get_startup_config('merlin-ip')}:7331/"
+    self.baseUrl = f"http://{ConfigReader.get_startup_config('merlin-ip')}:{self.port}/"
     logging.warning(f"Rebuilding Merlin IP to {self.baseUrl}")
     
   def error_handle(self, e: Exception):
@@ -59,7 +60,7 @@ class Merlin():
   def server_command(self, server: str, command: str):
     url = self.baseUrl + "/server?command=" + command + "&name=" + server
     try:
-      res = requests.post(url=url, timeout=10)
+      res = requests.post(url=url, timeout=(70 if command == 'kill' else 10))
     except Exception as e:
       self.error_handle(e)
     
